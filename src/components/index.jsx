@@ -14,7 +14,7 @@ function Index() {
 
           <div className="home__breadcrum">
           <Breadcrumb>
-            <Breadcrumb.Item linkAs={Link} linkProps={{ to: '/home' }} active={currentPath === '/home' || currentPath === '/'} className=''>
+            <Breadcrumb.Item linkAs={Link} linkProps={{ to: '/' }} active={currentPath === '/' || currentPath === '/'} className=''>
               Inicio
             </Breadcrumb.Item>
             <Breadcrumb.Item linkAs={Link} linkProps={{ to: '/catalogo' }} active={currentPath === '/catalogo'}>
