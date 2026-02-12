@@ -1,30 +1,54 @@
+import { useEffect, useState } from 'react';
 import { Container } from "react-bootstrap";
-import { ProductoCard } from './productoCard';
-import prod1 from '../assets/prod1.jpg';
-import prod2 from '../assets/prod2.jpg';
-import prod3 from '../assets/prod3.jpg';
-import prod4 from '../assets/prod4.jpg';
-import prod5 from '../assets/prod5.jpg';
-import prod6 from '../assets/prod6.jpg';
-import prod7 from '../assets/prod7.jpg';
-import prod8 from '../assets/prod8.jpg';
+import { ProductoCard } from './productoCard'; // Importación correcta (misma carpeta)
+import { getProducts } from '../services/productService'; // Importación correcta (subir un nivel y entrar a services)
 
-function Catalogo() {  
+function Catalogo() {
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchCatalog = async () => {
+      try {
+        const data = await getProducts();
+        setProducts(data);
+      } catch (error) {
+        console.error("Error cargando el catálogo:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCatalog();
+  }, []);
+
   return (
     <Container>
       <h1>Catalogo</h1>
 
-      <div className="catalogo-grid">
-        <ProductoCard titulo="Aros Elipse" precio="$4.500" imagen={prod1} />
-        <ProductoCard titulo="Aros Flor" precio="$5.000" imagen={prod2} />      
-        <ProductoCard titulo="Aros Flor" precio="$5.000" imagen={prod3} />      
-        <ProductoCard titulo="Aros Flor" precio="$5.000" imagen={prod4} />      
-        <ProductoCard titulo="Aros Flor" precio="$5.000" imagen={prod5} />      
-        <ProductoCard titulo="Aros Flor" precio="$5.000" imagen={prod6} />      
-        <ProductoCard titulo="Aros Flor" precio="$5.000" imagen={prod7} />      
-        <ProductoCard titulo="Aros Flor" precio="$5.000" imagen={prod8} />      
-      </div>
-    </Container>    
+      {loading ? (
+        <div className="text-center p-5">
+          {/* poner spinner */}
+          <p>Cargando productos de Prana...</p>
+        </div>
+      ) : (
+        <div className="catalogo-grid">
+          {products.length > 0 ? (
+            products.map((prod) => (
+              <ProductoCard 
+                key={prod._id}             
+                titulo={prod.name}         
+                precio={`$${prod.price}`}  
+                imagen={prod.imageUrl}     
+                descripcion={prod.description || "Descripción no disponible por el momento."}
+              />
+            ))
+          ) : (
+            <p>No hay productos disponibles aún.</p>
+          )}
+        </div>
+      )}
+    </Container>
   );
 }
 

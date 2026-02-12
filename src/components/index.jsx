@@ -12,17 +12,23 @@ function Index() {
         <Container>
           <div className="header-logo mx-auto"></div>
 
+          <div className="home__breadcrum">
           <Breadcrumb>
-            <Breadcrumb.Item linkAs={Link} linkProps={{ to: '/home' }} active={currentPath === '/home' || currentPath === '/'}>
+            <Breadcrumb.Item linkAs={Link} linkProps={{ to: '/home' }} active={currentPath === '/home' || currentPath === '/'} className=''>
               Inicio
             </Breadcrumb.Item>
             <Breadcrumb.Item linkAs={Link} linkProps={{ to: '/catalogo' }} active={currentPath === '/catalogo'}>
               Catálogo
             </Breadcrumb.Item>
+            <Breadcrumb.Item linkAs={Link} linkProps={{ to: '/agregarProducto' }} active={currentPath === '/agregarProducto'}>
+              Agregar producto
+            </Breadcrumb.Item>
             <Breadcrumb.Item linkAs={Link} linkProps={{ to: '/negocio' }} active={currentPath === '/negocio'}>
               Sobre Nosotros
             </Breadcrumb.Item>
           </Breadcrumb>
+
+          </div>
 
           <hr />
         </Container>
